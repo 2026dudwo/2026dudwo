@@ -247,15 +247,35 @@
     <script>
         const DEFAULT_COVER_IMAGE = 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&q=80';
 
-        // 로컬 스토리지에서 책 목록 및 책장 제목 불러오기
-        let stories = JSON.parse(localStorage.getItem('my_fairy_tales')) || [];
+        // ⭐ 선생님이 주신 실제 Heyzine 플립북 링크들을 기본 책장에 쏙 넣었습니다!
+        const DEFAULT_STORIES = [
+            {
+                id: 1,
+                title: "달라진 토리",
+                link: "https://heyzine.com/flip-book/3165d056ee.html",
+                coverUrl: "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&q=80"
+            },
+            {
+                id: 2,
+                title: "학교폭력은 나빠요",
+                link: "https://heyzine.com/flip-book/d6fd60e2c8.html",
+                coverUrl: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=400&q=80"
+            },
+            {
+                id: 3,
+                title: "동물시험",
+                link: "https://heyzine.com/flip-book/1e652cd848.html",
+                coverUrl: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=400&q=80"
+            }
+        ];
+
+        let stories = JSON.parse(localStorage.getItem('my_fairy_tales')) || DEFAULT_STORIES;
         
         let selectedBookId = null;
         let attachedCoverDataUrl = null;
         const SHELF_CAPACITY = 5;
 
         window.onload = function() {
-            // 저장된 제목/부제목 불러오기
             const savedTitle = localStorage.getItem('my_shelf_title');
             const savedSubtitle = localStorage.getItem('my_shelf_subtitle');
             
@@ -269,9 +289,7 @@
             renderBookshelf();
         };
 
-        // 제목이나 부제목이 수정될 때 자동 저장 이벤트 리스너 추가
         document.getElementById('bookshelf-title').addEventListener('blur', function() {
-            // 아이콘 제외한 텍스트만 추출
             const textOnly = this.innerText.trim();
             localStorage.setItem('my_shelf_title', textOnly);
         });
@@ -315,7 +333,6 @@
 
             document.getElementById('book-count').innerText = stories.length;
 
-            // 상태 변경 시 브라우저에 책 목록 저장
             localStorage.setItem('my_fairy_tales', JSON.stringify(stories));
 
             const shelf1Books = stories.slice(0, SHELF_CAPACITY);
