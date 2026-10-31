@@ -16,7 +16,6 @@
     <style>
         body {
             font-family: 'Gowun Batang', serif;
-            /* 배경: 짙은 녹차색 + 고급스러운 패브릭/벽지 질감 패터닝 */
             background-color: #2b3a2b;
             background-image: 
                 radial-gradient(circle at 50% 30%, rgba(60, 80, 58, 0.5) 0%, rgba(25, 36, 25, 0.95) 100%),
@@ -32,7 +31,6 @@
             padding: 20px;
         }
 
-        /* 목재 무늬 책장 외곽 프레임 */
         .wood-shelf {
             background-color: #3d2314;
             background-image: 
@@ -47,7 +45,6 @@
             border-radius: 8px;
         }
 
-        /* 책장 내부 수납공간 (목재 내벽 무늬) */
         .shelf-tier {
             background-color: #2c180b;
             background-image: 
@@ -62,7 +59,6 @@
             position: relative;
         }
 
-        /* 선반 바닥 받침대 */
         .shelf-tier::after {
             content: '';
             position: absolute;
@@ -74,7 +70,6 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.4);
         }
 
-        /* 표지가 보이는 전면 진열 책 스타일 */
         .book-cover {
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 
@@ -93,7 +88,6 @@
             z-index: 10;
         }
 
-        /* 표지 이미지 스타일 */
         .book-cover-img {
             position: absolute;
             inset: 0;
@@ -104,7 +98,6 @@
             border-bottom-right-radius: 6px;
         }
 
-        /* 표지 좌측 접힘선 느낌 (Book Spine Accent) */
         .book-cover-edge {
             position: absolute;
             left: 0;
@@ -116,7 +109,6 @@
             border-bottom-left-radius: 4px;
         }
 
-        /* 새 책 추가 버튼 카드 */
         .add-book-card {
             border: 2px dashed rgba(255, 255, 255, 0.35);
             background: rgba(255, 255, 255, 0.08);
@@ -129,7 +121,6 @@
             transform: translateY(-4px);
         }
 
-        /* 스크롤바 숨기기 */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -138,7 +129,6 @@
             scrollbar-width: none;
         }
 
-        /* 모달 애니메이션 */
         .modal-bg {
             background-color: rgba(0, 0, 0, 0.65);
             backdrop-filter: blur(4px);
@@ -147,7 +137,6 @@
 </head>
 <body>
 
-    <!-- 상단 타이틀 & 우측 상단 책 수 표기 -->
     <div class="w-full max-w-2xl flex justify-between items-end mb-4 px-2">
         <div>
             <div class="flex items-center space-x-2 group">
@@ -167,7 +156,6 @@
                 </button>
             </div>
         </div>
-        <!-- 우측 상단 책 수 표기 -->
         <div class="flex items-center space-x-2 bg-white/10 border border-white/20 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-inner">
             <i class="fa-solid fa-books text-white text-base"></i>
             <span class="text-xs text-white/90 font-medium">총 동화:</span>
@@ -176,15 +164,11 @@
         </div>
     </div>
 
-    <!-- 2단 목재 책장 본체 -->
     <div class="wood-shelf w-full max-w-2xl p-4 sm:p-6 mb-6">
-        <!-- 1단 선반 (위) -->
         <div class="shelf-tier h-52 rounded-t flex items-end px-4 pb-2 space-x-4 overflow-x-auto no-scrollbar" id="shelf-1"></div>
-        <!-- 2단 선반 (아래) -->
         <div class="shelf-tier h-52 rounded-b mt-3 flex items-end px-4 pb-2 space-x-4 overflow-x-auto no-scrollbar" id="shelf-2"></div>
     </div>
 
-    <!-- 동화 추가 모달 창 -->
     <div id="bookModal" class="hidden fixed inset-0 modal-bg z-50 flex items-center justify-center p-4">
         <div class="bg-stone-900 border border-amber-700/50 rounded-xl p-6 w-full max-w-md shadow-2xl text-stone-200">
             <div class="flex justify-between items-center mb-4 border-b border-stone-700 pb-3">
@@ -217,7 +201,6 @@
         </div>
     </div>
 
-    <!-- 책 상세 내용 보기 모달 -->
     <div id="viewModal" class="hidden fixed inset-0 modal-bg z-50 flex items-center justify-center p-4">
         <div class="bg-stone-900 border border-amber-700/50 rounded-xl p-6 w-full max-w-md shadow-2xl text-stone-200">
             <div class="flex justify-between items-start mb-4 border-b border-stone-700 pb-3">
@@ -247,25 +230,25 @@
     <script>
         const DEFAULT_COVER_IMAGE = 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&q=80';
 
-        // ⭐ 선생님이 주신 실제 Heyzine 플립북 링크들을 기본 책장에 쏙 넣었습니다!
+        // ⭐ 3권의 동화책(제목, 실제 Heyzine 링크, 실제 표지 이미지 주소) 완성본 데이터[cite: 1]
         const DEFAULT_STORIES = [
             {
                 id: 1,
                 title: "달라진 토리",
                 link: "https://heyzine.com/flip-book/3165d056ee.html",
-                coverUrl: "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&q=80"
+                coverUrl: "https://raw.githubusercontent.com/2026dudwo/2026dudwo/dud/cover%20(2).jpg"
             },
             {
                 id: 2,
                 title: "학교폭력은 나빠요",
                 link: "https://heyzine.com/flip-book/d6fd60e2c8.html",
-                coverUrl: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=400&q=80"
+                coverUrl: "https://raw.githubusercontent.com/2026dudwo/2026dudwo/dud/cover%20(1).jpg"
             },
             {
                 id: 3,
                 title: "동물시험",
                 link: "https://heyzine.com/flip-book/1e652cd848.html",
-                coverUrl: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=400&q=80"
+                coverUrl: "https://raw.githubusercontent.com/2026dudwo/2026dudwo/dud/cover.jpg"
             }
         ];
 
